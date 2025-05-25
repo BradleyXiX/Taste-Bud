@@ -112,18 +112,16 @@ main {
 .recipe-section {
   margin-top: 40px;
   width: 60vw;
-}
-
-.suggested-recipe-container {
-  margin-left: 17px;
-  margin-top: 20px;
   color: #0d0e0f;
-  line-height: 28px;
+  line-height: 25px;
   font-weight: 400;
-
 }
 
-.suggested-recipe-container ul li,
-.suggested-recipe-container ol li {
-  margin-bottom: 8px;
+.recipe-section h1,h2,h3,h4,p {
+  margin-bottom: 15px;
+}
+
+.recipe-section ul li,
+.recipe-section ol li {
+  margin-bottom: 15px;
 }
