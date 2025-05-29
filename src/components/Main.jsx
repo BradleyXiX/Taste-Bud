@@ -1,7 +1,7 @@
 import React from "react"
 import Recipe from "./Recipe"
 import IngredientsList from "./IngredientsList"
-import { getRecipeFromMistral } from "../../ai"
+import { getRecipeFromDeepSeek } from "../../ai"
 
 export default function Main() {
 
@@ -24,7 +24,7 @@ export default function Main() {
     
 
     async function getRecipe() {
-        const recipeMarkdown = await getRecipeFromMistral(ingredients)
+        const recipeMarkdown = await getRecipeFromDeepSeek(ingredients)
         setRecipe(recipeMarkdown)  
     }
 
