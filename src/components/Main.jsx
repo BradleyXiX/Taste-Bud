@@ -5,7 +5,7 @@ import { getRecipeFromMistral } from "../../ai"
 
 export default function Main() {
 
-    const [ingredients, setIngredients] = React.useState(["chicken", "potatoes", "all the main spcies", "tomatoes"])
+    const [ingredients, setIngredients] = React.useState([])
 
     function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
