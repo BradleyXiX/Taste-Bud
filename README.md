@@ -23,11 +23,10 @@ React.js
 
 DeepSeek API
 
-CSS/SCSS (or Tailwind if you used it)
+CSS - Styling
 
-Axios (or your preferred HTTP client)
+Axios
 
-Open a Pull Request
 
 ## License 📄
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -35,6 +34,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact 📧
 Have questions or suggestions? Reach out!
 
-Your Name - your.email@example.com
+Bradley Chiwo - BradJohn70@gmail.com
 
-Project Link: https://github.com/your-username/taste-bud
+Project Link: https://github.com/BradleyXiX/taste-bud
