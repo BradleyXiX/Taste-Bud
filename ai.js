@@ -24,7 +24,7 @@ export async function getRecipeFromDeepSeek(ingredientsArr) {
                 { role: "system", content: SYSTEM_PROMPT },
                 { role: "user", content: `I have ${ingredientsString}. Please give me a detailed recipe with ingredients and step-by-step instructions!` },
             ],
-            max_tokens: 2048,
+            max_tokens: 4096,
         }, {
             headers: {
                 "Content-Type": "application/json"

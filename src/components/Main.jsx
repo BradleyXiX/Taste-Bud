@@ -1,31 +1,38 @@
-import React from "react"
-import Recipe from "./Recipe"
-import IngredientsList from "./IngredientsList"
-import { getRecipeFromDeepSeek } from "../../ai"
+import React, { useState, useEffect, useRef } from "react";
+import Recipe from "./Recipe";
+import IngredientsList from "./IngredientsList";
+import { getRecipeFromDeepSeek } from "../../ai";
 
 export default function Main() {
+    const [ingredients, setIngredients] = useState(["chicken", "potatoes", "all the main spices", "rice"]);
+    const [recipe, setRecipe] = useState("");
+    const [loading, setLoading] = useState(false); // New loading state
+    const recipeSection = useRef(null);
 
-    const [ingredients, setIngredients] = React.useState(["chicken", "potatoes", "all the main spices", "rice"])
+    useEffect(() => {
+        if (recipe !== "" && recipeSection.current !== null) {
+            recipeSection.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [recipe]);
 
     function addIngredient(formData) {
-        const newIngredient = formData.get("ingredient")
-        setIngredients(prevIngredients => [...prevIngredients, newIngredient])
+        const newIngredient = formData.get("ingredient");
+        if (newIngredient.trim()) {
+            setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
+        }
     }
 
-    const [recipe, setRecipe] = React.useState("")
-
-    const recipeSection = React.useRef(null)
-
-    React.useEffect( () => {
-        if (recipe !== "" && recipeSection.current !== null) {
-            recipeSection.current.scrollIntoView({behavior: "smooth"})
-        }
-    }, [recipe])
-    
-
     async function getRecipe() {
-        const recipeMarkdown = await getRecipeFromDeepSeek(ingredients)
-        setRecipe(recipeMarkdown)  
+        setLoading(true); // Start loading
+        setRecipe(""); // Clear previous recipe
+        try {
+            const recipeMarkdown = await getRecipeFromDeepSeek(ingredients);
+            setRecipe(recipeMarkdown);
+        } catch (err) {
+            setRecipe("Failed to fetch recipe. Please try again.");
+        } finally {
+            setLoading(false); // Stop loading
+        }
     }
 
     return (
@@ -40,15 +47,15 @@ export default function Main() {
                 />
                 <button>Add Ingredients</button>
             </form>
-            {ingredients.length > 0 ? 
-            <IngredientsList 
-                ingredients={ingredients}
-                getRecipe={getRecipe}
-                ref={recipeSection}
-            /> : null}
+            {ingredients.length > 0 ? (
+                <IngredientsList
+                    ingredients={ingredients}
+                    getRecipe={getRecipe}
+                    loading={loading} // Pass loading state
+                    ref={recipeSection}
+                />
+            ) : null}
             {recipe && <Recipe recipe={recipe} />}
         </main>
-
-    )
+    );
 }
-
