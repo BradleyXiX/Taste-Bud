@@ -1,35 +1,42 @@
 import axios from 'axios';
 
-const apiKey = import.meta.env.VITE_API_KEY;
-const port = import.meta.env.VITE_PORT;
-
+const port = import.meta.env.VITE_PORT || 5000;
 
 const SYSTEM_PROMPT = `
-You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page.
+You are an assistant that receives a list of ingredients from a user and suggests a detailed recipe they can make using some or all of those ingredients. The recipe should:
+- Use as many of the provided ingredients as possible.
+- Include only a few additional common ingredients (e.g., salt, pepper, oil, common spices) if needed.
+- Be formatted in markdown with:
+  - A title (e.g., ## Recipe Name)
+  - A brief introduction
+  - A list of ingredients with quantities
+  - Step-by-step instructions
+  - Optional: serving suggestions or tips
+Ensure the recipe is clear, concise, and complete with all steps for preparation and cooking.
 `;
 
 export async function getRecipeFromDeepSeek(ingredientsArr) {
     const ingredientsString = ingredientsArr.join(", ");
     try {
-        const response = await axios.post("http://localhost:5000/deepseek", {
-            model: "deepseek-chat",
+        const response = await axios.post(`http://localhost:${port}/deepseek`, {
+            model: "deepseek/deepseek-r1-0528:free",
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
+                { role: "user", content: `I have ${ingredientsString}. Please give me a detailed recipe with ingredients and step-by-step instructions!` },
             ],
-            max_tokens: 1024,
+            max_tokens: 2048,
         }, {
             headers: {
-                "Authorization": `Bearer ${apiKey}`,
                 "Content-Type": "application/json"
             }
         });
 
         return response.data.choices[0]?.message?.content || "No response received.";
     } catch (err) {
-        console.error(err.message);
+        console.error('Error:', err.response?.data || err.message);
+        if (err.response?.status === 429) {
+            return "Rate limit exceeded. Please try again later.";
+        }
         return "Sorry, something went wrong. Please try again.";
     }
 }
-
-

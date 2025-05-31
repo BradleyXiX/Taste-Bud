@@ -5,7 +5,7 @@ import { getRecipeFromDeepSeek } from "../../ai"
 
 export default function Main() {
 
-    const [ingredients, setIngredients] = React.useState([])
+    const [ingredients, setIngredients] = React.useState(["chicken", "potatoes", "all the main spices", "rice"])
 
     function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
