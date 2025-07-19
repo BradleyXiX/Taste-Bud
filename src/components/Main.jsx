@@ -29,7 +29,7 @@ export default function Main() {
             const recipeMarkdown = await getRecipeFromDeepSeek(ingredients);
             setRecipe(recipeMarkdown);
         } catch (err) {
-            setRecipe("Failed to fetch recipe. Please try again.");
+            setRecipe("Failed to fetch recipe. Please try again.", err);
         } finally {
             setLoading(false); // Stop loading
         }

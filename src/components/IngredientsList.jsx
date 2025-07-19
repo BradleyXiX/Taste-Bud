@@ -1,5 +1,5 @@
 import React from "react";
-import './IngredientsList.css'; // Ensure CSS is imported
+
 
 const IngredientsList = React.forwardRef(({ ingredients, getRecipe, loading }, ref) => {
     const IngredientsListItems = ingredients.map((ingredient) => (
