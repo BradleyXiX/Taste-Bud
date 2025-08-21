@@ -36,7 +36,7 @@ export default function Main() {
     }
 
     return (
-        <main>
+        <main className="flex flex-col items-center justify-center gap-y-20 min-h-screen w-full">
             <form action={addIngredient} className="add-ingredient-form">
                 <input
                     id="ingredient"
