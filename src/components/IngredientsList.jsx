@@ -7,9 +7,9 @@ const IngredientsList = React.forwardRef(({ ingredients, getRecipe, loading }, r
     ));
 
     return (
-        <section className="ingredients-section">
-            <div className="ingredients-list">
-                <h1>Ingredients on hand: </h1>
+        <section className="">
+            <div className="border-solid">
+                <h1 className="p-20">Ingredients on hand: </h1>
                 <ul>{IngredientsListItems}</ul>
             </div>
             {ingredients.length > 3 ? (
