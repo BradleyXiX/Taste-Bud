@@ -18,7 +18,7 @@ Ensure the recipe is clear, concise, and complete with all steps for preparation
 export async function getRecipeFromDeepSeek(ingredientsArr) {
     const ingredientsString = ingredientsArr.join(", ");
     try {
-        const response = await axios.post(`http://localhost:${port}/deepseek`, {
+        const response = await axios.post(`https://tastebud-d5gu.onrender.com/deepseek`, {
             model: "deepseek/deepseek-r1-0528:free",
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },

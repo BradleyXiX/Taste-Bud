@@ -12,6 +12,10 @@ const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("TasteBud API is running!");
+});
+
 app.post("/deepseek", async (req, res) => {
   try {
     console.log("Request body:", req.body);
