@@ -3,7 +3,6 @@ import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
 
-
 dotenv.config();
 
 console.log("DEEPSEEK_API_KEY:", process.env.DEEPSEEK_API_KEY);
@@ -12,7 +11,6 @@ console.log("PORT:", process.env.PORT);
 const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
 app.use(express.json());
-
 
 app.post("/deepseek", async (req, res) => {
   try {
@@ -37,7 +35,6 @@ app.post("/deepseek", async (req, res) => {
     });
   }
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
