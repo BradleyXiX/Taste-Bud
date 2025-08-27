@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
-import { getRecipeFromDeepSeek } from "../../ai";
+import { getRecipeFromMistral } from "../../ai";
 
 export default function Main() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState(["tomatoes", "onions","chicken","rice"]);
   const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(false); // New loading state
   const recipeSection = useRef(null);
@@ -23,11 +23,11 @@ export default function Main() {
   }
 
   async function getRecipe() {
-    setLoading(true); // Start loading
+    setLoading(true); 
     setRecipe("");
-    setIngredients(""); // Clear previous recipe
+    setIngredients(""); 
     try {
-      const recipeMarkdown = await getRecipeFromDeepSeek(ingredients);
+      const recipeMarkdown = await getRecipeFromMistral(ingredients);
       setRecipe(recipeMarkdown);
     } catch (err) {
       setRecipe("Failed to fetch recipe. Please try again.", err);
