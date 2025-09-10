@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Recipe from "./Recipe";
 import IngredientsList from "./IngredientsList";
-import { getRecipeFromMistral } from "../../ai";
+import { getRecipeFromDeepseek } from "../../ai";
 
 export default function Main() {
   const [ingredients, setIngredients] = useState(["tomatoes", "onions","chicken","rice"]);
@@ -27,7 +27,7 @@ export default function Main() {
     setRecipe("");
     setIngredients(""); 
     try {
-      const recipeMarkdown = await getRecipeFromMistral(ingredients);
+      const recipeMarkdown = await getRecipeFromDeepseek(ingredients);
       setRecipe(recipeMarkdown);
     } catch (err) {
       setRecipe("Failed to fetch recipe. Please try again.", err);

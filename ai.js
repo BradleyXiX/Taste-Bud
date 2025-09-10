@@ -13,17 +13,15 @@ You are an assistant that receives a list of ingredients from a user and suggest
 Ensure the recipe is clear, concise, and complete with all steps for preparation and cooking.
 `;
 
-export async function getRecipeFromMistral(ingredientsArr) {
-  // ✅ Prevent empty input from triggering a bad request
+export async function getRecipeFromDeepseek(ingredientsArr) {
   if (!ingredientsArr || ingredientsArr.length === 0) {
     return "Please provide at least one ingredient.";
   }
 
   const ingredientsString = ingredientsArr.join(", ");
 
-  // ✅ Construct the payload with system + user messages
   const payload = {
-    model: import.meta.env.VITE_MODEL_NAME,
+    model: "deepseek-chat", 
     messages: [
       { role: "system", content: SYSTEM_PROMPT },
       {
@@ -35,28 +33,11 @@ export async function getRecipeFromMistral(ingredientsArr) {
     stream: false,
   };
 
-  // ✅ Optional: log payload for debugging during development
-  console.log("Sending payload to OpenRouter:", payload);
-
   try {
-    const response = await axios.post(
-      import.meta.env.VITE_API_URL,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    // ✅ Return the assistant's response or fallback message
-    return (
-      response.data.choices[0]?.message?.content || "No response received."
-    );
+    const response = await axios.post("http://localhost:5000/deepseek", payload);
+    return response.data.choices[0]?.message?.content || "No response received.";
   } catch (err) {
-    // ✅ Improved error logging for easier debugging
-    console.error("OpenRouter API Error:", err.response?.data || err.message);
+    console.error("Backend API Error:", err.response?.data || err.message);
     return "Something went wrong. Try again later.";
   }
 }
